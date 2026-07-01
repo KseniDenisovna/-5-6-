@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пластилиновый мир Ь и Ъ | 5 класс</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --clay-pink: #ff9aa2;
+            --clay-orange: #ffb347;
+            --clay-yellow: #feca57;
+            --clay-green: #6bcb77;
+            --clay-light-green: #b8e6b8;
+            --clay-blue: #7ec8e3;
+            --clay-purple: #c3aed6;
+            --clay-white: #fffdf7;
+            --clay-red: #e74c3c;
+            --clay-dark: #4a3728;
+            --clay-shadow-sm: 0 4px 0 rgba(0, 0, 0, 0.2);
+            --clay-shadow-md: 0 6px 0 rgba(0, 0, 0, 0.18), 0 10px 25px rgba(0, 0, 0, 0.12);
+            --clay-shadow-lg: 0 8px 0 rgba(0, 0, 0, 0.16), 0 14px 30px rgba(0, 0, 0, 0.14);
+            --font-title: 'Caveat', cursive;
+            --font-body: 'Patrick Hand', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: #fdf3e0;
+            background-image: radial-gradient(circle at 20% 30%, #ffe8c9 1%, transparent 8%),
+                radial-gradient(circle at 75% 60%, #ffd4a8 1%, transparent 7%),
+                radial-gradient(circle at 50% 80%, #ffe0b5 1%, transparent 6%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 680px;
+            background: #fffef9;
+            border-radius: 40px;
+            padding: 25px 20px 20px;
+            box-shadow: 0 12px 0 #d4c5a9, 0 18px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            border: 4px solid #e8d5b0;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .game-container {
+                border-radius: 28px;
+                padding: 18px 12px 14px;
+                box-shadow: 0 8px 0 #d4c5a9, 0 12px 25px rgba(0, 0, 0, 0.13);
+                border-width: 3px;
+                min-height: 460px;
+            }
+        }
+
+        /* ===== Progress Bar ===== */
+        .progress-bar-wrap {
+            width: 100%;
+            overflow-x: auto;
+            padding: 6px 4px 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: center;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .progress-bar-wrap::-webkit-scrollbar {
+            height: 4px;
+        }
+        .progress-bar-wrap::-webkit-scrollbar-thumb {
+            background: #d4c5a9;
+            border-radius: 10px;
+        }
+        .progress-dots {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+            padding: 0 8px;
+        }
+        .progress-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e8f5e0;
+            border: 3px solid #c8e0b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-body);
+            font-size: 0.85em;
+            color: #7a9f6e;
+            font-weight: bold;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex-shrink: 0;
+            box-shadow: 0 3px 0 #c8d8b8;
+            position: relative;
+        }
+        .progress-dot.done {
+            background: #6bcb77;
+            border-color: #4a9e56;
+            color: #fff;
+            box-shadow: 0 4px 0 #3d7a45;
+            font-size: 1.1em;
+            transform: scale(1.05);
+        }
+        .progress-dot.done::after {
+            content: '✓';
+            font-weight: bold;
+        }
+        .progress-dot.done span {
+            display: none;
+        }
+        .progress-dot.active {
+            background: #ffb347;
+            border-color: #e69520;
+            color: #fff;
+            transform: scale(1.25);
+            box-shadow: 0 5px 0 #c47a15, 0 0 18px rgba(255, 179, 71, 0.5);
+            z-index: 2;
+            animation: pulseDot 1s ease-in-out infinite;
+        }
+        @keyframes pulseDot {
+            0%,
+            100% {
+                box-shadow: 0 5px 0 #c47a15, 0 0 10px rgba(255, 179, 71, 0.4);
+            }
+            50% {
+                box-shadow: 0 5px 0 #c47a15, 0 0 24px rgba(255, 179, 71, 0.75);
+            }
+        }
+        @media (max-width: 600px) {
+            .progress-dot {
+                width: 28px;
+                height: 28px;
+                font-size: 0.7em;
+                border-width: 2px;
+            }
+            .progress-dots {
+                gap: 7px;
+            }
+        }
+
+        /* ===== Screens ===== */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            animation: fadeIn 0.5s ease;
+            flex: 1;
+        }
+        .screen.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+            70% {
+                transform: scale(0.94);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            15% {
+                transform: translateX(-8px);
+            }
+            30% {
+                transform: translateX(8px);
+            }
+            45% {
+                transform: translateX(-6px);
+            }
+            60% {
+                transform: translateX(6px);
+            }
+            75% {
+                transform: translateX(-3px);
+            }
+            90% {
+                transform: translateX(3px);
+            }
+        }
+        @keyframes starSpin {
+            0% {
+                transform: rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            60% {
+                transform: rotate(360deg) scale(1.4);
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+                opacity: 1;
+            }
+        }
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-120px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes wiggle {
+            0%,
+            100% {
+                transform: rotate(-3deg);
+            }
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+        .shake-anim {
+            animation: shake 0.5s ease;
+        }
+
+        /* ===== Clay Elements ===== */
+        .clay-title {
+            font-family: var(--font-title);
+            font-size: 2.6em;
+            font-weight: 700;
+            color: #5c3d2e;
+            text-align: center;
+            text-shadow: 2px 2px 0 #fff, 3px 3px 0 rgba(0, 0, 0, 0.1);
+            margin: 6px 0;
+            letter-spacing: 1px;
+        }
+        .clay-subtitle {
+            font-family: var(--font-title);
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #8b5e3c;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .clay-btn {
+            font-family: var(--font-body);
+            font-size: 1.15em;
+            padding: 13px 32px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            color: #fff;
+            letter-spacing: 0.5px;
+            transition: all 0.12s ease;
+            box-shadow: var(--clay-shadow-md);
+            position: relative;
+            text-decoration: none;
+            display: inline-block;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .clay-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2), 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        .clay-btn.orange {
+            background: #ffb347;
+            box-shadow: 0 6px 0 #d4892a, 0 10px 22px rgba(0, 0, 0, 0.13);
+        }
+        .clay-btn.green {
+            background: #6bcb77;
+            box-shadow: 0 6px 0 #3d8b48, 0 10px 22px rgba(0, 0, 0, 0.13);
+        }
+        .clay-btn.blue {
+            background: #7ec8e3;
+            box-shadow: 0 6px 0 #4a9ab5, 0 10px 22px rgba(0, 0, 0, 0.13);
+        }
+        .clay-btn.pink {
+            background: #ff9aa2;
+            box-shadow: 0 6px 0 #c76d75, 0 10px 22px rgba(0, 0, 0, 0.13);
+        }
+        .clay-btn.small {
+            font-size: 0.95em;
+            padding: 8px 18px;
+            border-radius: 22px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+        .clay-btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(30%);
+        }
+        .clay-input {
+            font-family: var(--font-body);
+            font-size: 1.1em;
+            padding: 10px 16px;
+            border: 3px solid #d4c5a9;
+            border-radius: 20px;
+            background: #fffef9;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 0 #d4c5a9;
+            outline: none;
+            transition: all 0.25s ease;
+            width: 100%;
+            max-width: 200px;
+            text-align: center;
+        }
+        .clay-input:focus {
+            border-color: #ffb347;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.06), 0 4px 0 #d4892a, 0 0 0 4px rgba(255, 179, 71, 0.2);
+        }
+        .clay-input.correct {
+            border-color: #6bcb77 !important;
+            background: #eafff0 !important;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.04), 0 4px 0 #3d8b48 !important;
+        }
+        .clay-input.wrong {
+            border-color: #e74c3c !important;
+            background: #fff5f5 !important;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.04), 0 4px 0 #b33 !important;
+        }
+        .info-box {
+            background: #fffbe6;
+            border: 3px solid #feca57;
+            border-radius: 20px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            font-family: var(--font-body);
+            font-size: 0.95em;
+            color: #6b5400;
+            box-shadow: 0 4px 0 #e0b830;
+            text-align: center;
+            max-width: 550px;
+        }
+        .feedback {
+            font-family: var(--font-body);
+            font-size: 1em;
+            text-align: center;
+            margin: 8px 0;
+            min-height: 28px;
+            transition: all 0.3s ease;
+            padding: 6px 14px;
+            border-radius: 14px;
+        }
+        .feedback.correct-fb {
+            color: #2d6a3f;
+            background: #e0ffe0;
+            border: 2px solid #6bcb77;
+        }
+        .feedback.wrong-fb {
+            color: #8b1a1a;
+            background: #ffe0e0;
+            border: 2px solid #e74c3c;
+        }
+        .nav-btns {
+            display: flex;
+            gap: 14px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .row-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 8px 0;
+        }
+        .choice-btn {
+            font-family: var(--font-body);
+            font-size: 1em;
+            padding: 10px 20px;
+            border-radius: 22px;
+            border: 3px solid #d4c5a9;
+            background: #fffef9;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #d4c5a9;
+            transition: all 0.15s ease;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .choice-btn:hover {
+            background: #fff3e0;
+            border-color: #ffb347;
+        }
+        .choice-btn.selected {
+            background: #fff3d6;
+            border-color: #ffb347;
+            box-shadow: 0 4px 0 #d4892a;
+            font-weight: bold;
+        }
+        .choice-btn.correct-choice {
+            background: #d4ffd4 !important;
+            border-color: #6bcb77 !important;
+            box-shadow: 0 4px 0 #3d8b48 !important;
+        }
+        .choice-btn.wrong-choice {
+            background: #ffd4d4 !important;
+            border-color: #e74c3c !important;
+            box-shadow: 0 4px 0 #b33 !important;
+        }
+        .star-display {
+            font-size: 3em;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .star-display span {
+            display: inline-block;
+            animation: starSpin 0.7s ease forwards;
+            opacity: 0;
+        }
+        .star-display span:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        .star-display span:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+        .star-display span:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        /* ===== Confetti ===== */
+        #confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            top: -30px;
+            animation: confettiFall 3.5s ease-in forwards;
+        }
+
+        /* ===== SVG Decor ===== */
+        .clay-svg {
+            filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.15));
+        }
+        .gear-spin {
+            animation: spin 8s linear infinite;
+            transform-origin: center;
+        }
+
+        /* ===== Task specific ===== */
+        .task-word-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 4px 0;
+        }
+        .task-label {
+            font-family: var(--font-body);
+            font-size: 1.05em;
+            color: #4a3728;
+            min-width: 90px;
+            text-align: right;
+        }
+        @media (max-width: 600px) {
+            .clay-title {
+                font-size: 1.9em;
+            }
+            .clay-subtitle {
+                font-size: 1.1em;
+            }
+            .clay-btn {
+                font-size: 1em;
+                padding: 10px 22px;
+            }
+            .clay-input {
+                font-size: 0.95em;
+                max-width: 140px;
+                padding: 8px 12px;
+            }
+            .task-label {
+                font-size: 0.9em;
+                min-width: 65px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container" id="gameContainer">
+        <!-- Progress Bar -->
+        <div class="progress-bar-wrap" id="progressBarWrap" style="display:none;">
+            <div class="progress-dots" id="progressDots"></div>
+        </div>
+
+        <!-- ==================== SCREEN: TITLE ==================== -->
+        <div class="screen active" id="screen-title">
+            <svg width="90" height="90" viewBox="0 0 90 90" class="clay-svg" style="margin-bottom:6px;">
+                <circle cx="45" cy="38" r="26" fill="#ffb347" stroke="#d4892a" stroke-width="3"/>
+                <circle cx="34" cy="32" r="5" fill="#fff" opacity="0.7"/>
+                <circle cx="52" cy="32" r="5" fill="#fff" opacity="0.7"/>
+                <circle cx="38" cy="30" r="2" fill="#333"/>
+                <circle cx="56" cy="30" r="2" fill="#333"/>
+                <path d="M32 48 Q45 56 58 48" fill="none" stroke="#5c3d2e" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="45" cy="70" rx="18" ry="10" fill="#feca57" stroke="#e0b830" stroke-width="2"/>
+                <text x="45" y="62" text-anchor="middle" font-size="22" font-family="var(--font-title)" fill="#5c3d2e" font-weight="700">?</text>
+            </svg>
+            <h1 class="clay-title">Пластилиновый мир<br>Ь и Ъ</h1>
+            <p class="clay-subtitle">Повторяем правила 5 класса</p>
+            <p style="font-family:var(--font-body);color:#8b5e3c;text-align:center;max-width:400px;margin-bottom:12px;">
+                Помоги забавным пластилиновым героям разобраться, где нужен <b>мягкий знак</b>, а где — <b>твёрдый</b>!
+            </p>
+            <button class="clay-btn orange" onclick="showScreen('screen-theory')" style="font-size:1.3em;padding:14px 40px;">
+                📖 Начать игру!
+            </button>
+        </div>
+
+        <!-- ==================== SCREEN: THEORY ==================== -->
+        <div class="screen" id="screen-theory">
+            <h2 class="clay-title" style="font-size:2em;">📚 Краткая теория</h2>
+            <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:10px 0;">
+                <div style="background:#fff0e6;border:3px solid #ffb347;border-radius:24px;padding:14px 16px;max-width:280px;box-shadow:0 5px 0 #d4892a;flex:1;min-width:200px;">
+                    <b style="font-family:var(--font-title);font-size:1.3em;color:#c47a15;">Разделительный Ъ</b>
+                    <p style="margin:4px 0;color:#4a3728;">Пишется <b>после приставок</b> на согласный перед буквами <b>Е, Ё, Ю, Я</b>.</p>
+                    <p style="color:#8b5e3c;font-size:0.9em;">Примеры: под<b>ъ</b>езд, с<b>ъ</b>ёмка, об<b>ъ</b>явление.</p>
+                </div>
+                <div style="background:#e6f9ff;border:3px solid #7ec8e3;border-radius:24px;padding:14px 16px;max-width:280px;box-shadow:0 5px 0 #4a9ab5;flex:1;min-width:200px;">
+                    <b style="font-family:var(--font-title);font-size:1.3em;color:#3a7a95;">Разделительный Ь</b>
+                    <p style="margin:4px 0;color:#4a3728;">Пишется <b>в корне слова</b> после согласных перед <b>Е, Ё, Ю, Я, И</b>.</p>
+                    <p style="color:#8b5e3c;font-size:0.9em;">Примеры: в<b>ь</b>юга, сем<b>ь</b>я, руч<b>ь</b>и.</p>
+                </div>
+                <div style="background:#f0ffe6;border:3px solid #6bcb77;border-radius:24px;padding:14px 16px;max-width:280px;box-shadow:0 5px 0 #3d8b48;flex:1;min-width:200px;">
+                    <b style="font-family:var(--font-title);font-size:1.3em;color:#2d6a3f;">Ь — другие случаи</b>
+                    <p style="margin:4px 0;color:#4a3728;">• Смягчение согласных: кон<b>ь</b>ки<br>• После шипящих у сущ. 3 скл.: ноч<b>ь</b><br>• В глаголах: береч<b>ь</b></p>
+                </div>
+            </div>
+            <svg width="280" height="70" viewBox="0 0 280 70" class="clay-svg" style="margin:6px 0;">
+                <rect x="10" y="12" width="80" height="40" rx="14" fill="#ffe0c0" stroke="#d4892a" stroke-width="3"/>
+                <text x="50" y="38" text-anchor="middle" font-size="16" font-family="var(--font-body)" fill="#5c3d2e">приставка</text>
+                <rect x="100" y="8" width="24" height="48" rx="10" fill="#ffb347" stroke="#c47a15" stroke-width="3"/>
+                <text x="112" y="39" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">Ъ</text>
+                <rect x="135" y="12" width="80" height="40" rx="14" fill="#d4e8ff" stroke="#4a9ab5" stroke-width="3"/>
+                <text x="175" y="38" text-anchor="middle" font-size="16" font-family="var(--font-body)" fill="#5c3d2e">корень</text>
+                <text x="112" y="64" text-anchor="middle" font-size="11" font-family="var(--font-body)" fill="#8b5e3c">Е,Ё,Ю,Я</text>
+            </svg>
+            <button class="clay-btn green" onclick="startTasks()" style="font-size:1.2em;">✅ Всё понятно, к заданиям!</button>
+            <button class="clay-btn blue small" onclick="showScreen('screen-title')" style="margin-top:6px;">↩ Назад</button>
+        </div>
+
+        <!-- ==================== TASK SCREENS (1-10) ==================== -->
+        <!-- TASK 1: Базовое – заполнить пропуски -->
+        <div class="screen" id="screen-task-1">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 1</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Вставьте <b>Ъ</b> или <b>Ь</b> в пропуски:</p>
+            <div class="info-box">💡 Подсказка: определи, где приставка, а где корень. После приставки на согласный перед Е,Ё,Ю,Я — Ъ!</div>
+            <div class="task-word-row"><span class="task-label">под...езд</span><input class="clay-input math-input" id="t1a1" maxlength="1" placeholder="?"></div>
+            <div class="task-word-row"><span class="task-label">в...юга</span><input class="clay-input math-input" id="t1a2" maxlength="1" placeholder="?"></div>
+            <div class="task-word-row"><span class="task-label">с...ёмка</span><input class="clay-input math-input" id="t1a3" maxlength="1" placeholder="?"></div>
+            <div class="task-word-row"><span class="task-label">об...явление</span><input class="clay-input math-input" id="t1a4" maxlength="1" placeholder="?"></div>
+            <div class="task-word-row"><span class="task-label">сем...я</span><input class="clay-input math-input" id="t1a5" maxlength="1" placeholder="?"></div>
+            <div class="feedback" id="fb1"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="showScreen('screen-theory')">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask1()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next1" style="display:none;" onclick="goToTask(2)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 2: Функция Ь -->
+        <div class="screen" id="screen-task-2">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 2</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Определите <b>функцию Ь</b> в каждом слове:</p>
+            <div class="info-box">💡 Функции: смягчающий (мягкость согласного), разделительный (перед гласными), показатель формы (3 скл., глаголы).</div>
+            <div style="width:100%;max-width:500px;">
+                <p style="font-weight:bold;margin:8px 0 2px;">Слово: <b>коньки</b></p>
+                <div class="row-wrap" data-group="g1">
+                    <button class="choice-btn" data-val="soft" onclick="selectChoice(this,'g1')">Смягчающий</button>
+                    <button class="choice-btn" data-val="sep" onclick="selectChoice(this,'g1')">Разделительный</button>
+                    <button class="choice-btn" data-val="form" onclick="selectChoice(this,'g1')">Показатель формы</button>
+                </div>
+                <p style="font-weight:bold;margin:12px 0 2px;">Слово: <b>вьюга</b></p>
+                <div class="row-wrap" data-group="g2">
+                    <button class="choice-btn" data-val="soft" onclick="selectChoice(this,'g2')">Смягчающий</button>
+                    <button class="choice-btn" data-val="sep" onclick="selectChoice(this,'g2')">Разделительный</button>
+                    <button class="choice-btn" data-val="form" onclick="selectChoice(this,'g2')">Показатель формы</button>
+                </div>
+                <p style="font-weight:bold;margin:12px 0 2px;">Слово: <b>ночь</b></p>
+                <div class="row-wrap" data-group="g3">
+                    <button class="choice-btn" data-val="soft" onclick="selectChoice(this,'g3')">Смягчающий</button>
+                    <button class="choice-btn" data-val="sep" onclick="selectChoice(this,'g3')">Разделительный</button>
+                    <button class="choice-btn" data-val="form" onclick="selectChoice(this,'g3')">Показатель формы</button>
+                </div>
+            </div>
+            <div class="feedback" id="fb2"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(1)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask2()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next2" style="display:none;" onclick="goToTask(3)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 3: SVG-иллюстрация -->
+        <div class="screen" id="screen-task-3">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 3</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Посмотри на схему слова и выбери нужный знак:</p>
+            <svg width="300" height="130" viewBox="0 0 300 130" class="clay-svg" style="margin:8px 0;">
+                <rect x="20" y="25" width="90" height="50" rx="16" fill="#ffe0c0" stroke="#d4892a" stroke-width="3.5"/>
+                <text x="65" y="56" text-anchor="middle" font-size="17" font-family="var(--font-body)" fill="#5c3d2e" font-weight="bold">ПОД</text>
+                <text x="65" y="72" text-anchor="middle" font-size="11" fill="#8b5e3c">(приставка)</text>
+                <path d="M115 50 L145 50" stroke="#5c3d2e" stroke-width="3" marker-end="url(#arrowhead)"/>
+                <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#5c3d2e"/></marker></defs>
+                <circle cx="160" cy="50" r="18" fill="#feca57" stroke="#e0b830" stroke-width="3"/>
+                <text x="160" y="57" text-anchor="middle" font-size="22" font-weight="bold" fill="#5c3d2e">?</text>
+                <path d="M183 50 L213 50" stroke="#5c3d2e" stroke-width="3" marker-end="url(#arrowhead)"/>
+                <rect x="220" y="25" width="65" height="50" rx="16" fill="#d4e8ff" stroke="#4a9ab5" stroke-width="3.5"/>
+                <text x="252" y="56" text-anchor="middle" font-size="17" font-family="var(--font-body)" fill="#5c3d2e" font-weight="bold">ЕЗД</text>
+                <text x="252" y="72" text-anchor="middle" font-size="11" fill="#8b5e3c">(корень)</text>
+                <text x="150" y="110" text-anchor="middle" font-size="12" fill="#8b5e3c">на согласный + Е</text>
+            </svg>
+            <div class="info-box">💡 Приставка <b>ПОД-</b> оканчивается на согласный, корень начинается с <b>Е</b>. Какой знак нужен?</div>
+            <div class="row-wrap" data-group="t3g">
+                <button class="choice-btn" data-val="tverdy" onclick="selectChoice(this,'t3g')">Твёрдый знак (Ъ)</button>
+                <button class="choice-btn" data-val="myagky" onclick="selectChoice(this,'t3g')">Мягкий знак (Ь)</button>
+            </div>
+            <div class="feedback" id="fb3"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(2)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask3()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next3" style="display:none;" onclick="goToTask(4)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 4: Multiple Choice -->
+        <div class="screen" id="screen-task-4">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 4</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Выберите <b>правильное</b> написание слова:</p>
+            <div class="info-box">💡 Вспомни: после приставок на согласный (в том числе иноязычных) перед Е,Ё,Ю,Я пишется Ъ.</div>
+            <p style="font-size:1.3em;font-weight:bold;color:#4a3728;margin:6px 0;">ад...ютант</p>
+            <div class="row-wrap" data-group="t4g">
+                <button class="choice-btn" data-val="A" onclick="selectChoice(this,'t4g')">адъютант</button>
+                <button class="choice-btn" data-val="B" onclick="selectChoice(this,'t4g')">адьютант</button>
+                <button class="choice-btn" data-val="C" onclick="selectChoice(this,'t4g')">адютант</button>
+            </div>
+            <div class="feedback" id="fb4"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(3)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask4()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next4" style="display:none;" onclick="goToTask(5)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 5: Упрощённое задание -->
+        <div class="screen" id="screen-task-5">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 5</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Вставьте пропущенные буквы в текст:</p>
+            <div class="info-box">💡 Внимательно смотри на стык приставки и корня или на положение в корне слова.</div>
+            <p style="font-family:var(--font-body);font-size:1.05em;color:#4a3728;text-align:center;max-width:450px;">
+                По небу плыли обл...ка. Птицы с...ёжились от холода. Кот в...юном забрался под крыльцо.
+            </p>
+            <div class="task-word-row"><span class="task-label">обл...ка</span><input class="clay-input math-input" id="t5a1" maxlength="2" placeholder="?"></div>
+            <div class="task-word-row"><span class="task-label">с...ёжились</span><input class="clay-input math-input" id="t5a2" maxlength="2" placeholder="?"></div>
+            <div class="task-word-row"><span class="task-label">в...юном</span><input class="clay-input math-input" id="t5a3" maxlength="2" placeholder="?"></div>
+            <div class="feedback" id="fb5"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(4)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask5()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next5" style="display:none;" onclick="goToTask(6)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 6: Правило -->
+        <div class="screen" id="screen-task-6">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 6</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Выберите <b>верное утверждение</b>:</p>
+            <div class="info-box">💡 Вспомни правило из учебника: где именно пишется разделительный твёрдый знак?</div>
+            <div class="row-wrap" data-group="t6g" style="flex-direction:column;align-items:stretch;max-width:450px;width:100%;">
+                <button class="choice-btn" data-val="A" onclick="selectChoice(this,'t6g')" style="text-align:left;">А) Разделительный Ъ пишется после приставок на согласный перед буквами Е, Ё, Ю, Я</button>
+                <button class="choice-btn" data-val="B" onclick="selectChoice(this,'t6g')" style="text-align:left;">Б) Разделительный Ъ пишется в корне слова перед буквами Е, Ё, Ю, Я, И</button>
+                <button class="choice-btn" data-val="C" onclick="selectChoice(this,'t6g')" style="text-align:left;">В) Разделительный Ъ пишется после любых приставок</button>
+            </div>
+            <div class="feedback" id="fb6"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(5)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask6()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next6" style="display:none;" onclick="goToTask(7)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 7: Обратная задача (чекбоксы) -->
+        <div class="screen" id="screen-task-7">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 7</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Дано правило: <i>«Разделительный Ь пишется в корне слова после согласных перед Е, Ё, Ю, Я, И»</i></p>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Отметьте <b>все</b> слова, которые соответствуют этому правилу:</p>
+            <div class="info-box">💡 Проверь каждое слово: есть ли в нём разделительный Ь именно в корне?</div>
+            <div style="max-width:400px;width:100%;" id="t7checkboxes">
+                <label class="choice-btn" style="display:block;margin:4px 0;cursor:pointer;"><input type="checkbox" value="vuga" style="margin-right:8px;"> вьюга</label>
+                <label class="choice-btn" style="display:block;margin:4px 0;cursor:pointer;"><input type="checkbox" value="podezd" style="margin-right:8px;"> подъезд</label>
+                <label class="choice-btn" style="display:block;margin:4px 0;cursor:pointer;"><input type="checkbox" value="semya" style="margin-right:8px;"> семья</label>
+                <label class="choice-btn" style="display:block;margin:4px 0;cursor:pointer;"><input type="checkbox" value="ruzhye" style="margin-right:8px;"> ружьё</label>
+                <label class="choice-btn" style="display:block;margin:4px 0;cursor:pointer;"><input type="checkbox" value="syemka" style="margin-right:8px;"> съёмка</label>
+            </div>
+            <div class="feedback" id="fb7"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(6)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask7()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next7" style="display:none;" onclick="goToTask(8)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 8: Преобразование -->
+        <div class="screen" id="screen-task-8">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 8</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Добавьте приставку <b>ПОД-</b> к слову <b>ЕХАТЬ</b> так, чтобы получилось слово с <b>Ъ</b>.</p>
+            <div class="info-box">💡 Приставка ПОД- оканчивается на согласный, корень начинается с Е. Между ними нужен Ъ!</div>
+            <p style="font-family:var(--font-body);color:#4a3728;">Запишите получившееся слово:</p>
+            <input class="clay-input math-input" id="t8a1" placeholder="под...ехать" style="max-width:250px;">
+            <div class="feedback" id="fb8"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(7)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask8()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next8" style="display:none;" onclick="goToTask(9)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 9: Текстовая задача -->
+        <div class="screen" id="screen-task-9">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 9</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Найдите <b>3 ошибки</b> в тексте и запишите правильные слова:</p>
+            <div class="info-box">💡 Ищи слова, где пропущен Ь или Ъ, либо знак поставлен неверно.</div>
+            <p style="font-family:var(--font-body);font-size:1em;color:#4a3728;background:#fffef9;padding:10px 16px;border-radius:16px;border:2px dashed #d4c5a9;max-width:450px;text-align:center;">
+                <i>«Вюга завывала за окном. Мы подехали к подезду. Семя собралась за столом.»</i>
+            </p>
+            <p style="font-family:var(--font-body);color:#4a3728;margin-top:8px;">Исправьте ошибки (3 слова):</p>
+            <div class="task-word-row"><span class="task-label">Ошибка 1:</span><input class="clay-input math-input" id="t9a1" placeholder="вместо Вюга"></div>
+            <div class="task-word-row"><span class="task-label">Ошибка 2:</span><input class="clay-input math-input" id="t9a2" placeholder="вместо подехали"></div>
+            <div class="task-word-row"><span class="task-label">Ошибка 3:</span><input class="clay-input math-input" id="t9a3" placeholder="вместо Семя"></div>
+            <div class="feedback" id="fb9"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(8)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask9()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next9" style="display:none;" onclick="goToTask(10)">Далее →</button>
+            </div>
+        </div>
+
+        <!-- TASK 10: Распределение с условием -->
+        <div class="screen" id="screen-task-10">
+            <h2 class="clay-title" style="font-size:1.8em;">Задание 10</h2>
+            <p style="font-family:var(--font-body);text-align:center;color:#4a3728;">Распределите слова: выберите для каждого <b>Ъ</b> или <b>Ь</b>.</p>
+            <div class="info-box">💡 Определи, где разделительный твёрдый знак (после приставки), а где разделительный мягкий (в корне).</div>
+            <div id="t10words" style="max-width:450px;width:100%;">
+                <!-- dynamically filled or static -->
+            </div>
+            <div class="feedback" id="fb10"></div>
+            <div class="nav-btns">
+                <button class="clay-btn blue small" onclick="goToTask(9)">↩ Назад</button>
+                <button class="clay-btn orange check-btn" onclick="checkTask10()">🔍 Проверить</button>
+                <button class="clay-btn green next-btn" id="next10" style="display:none;" onclick="showResults()">🏆 Результат</button>
+            </div>
+        </div>
+
+        <!-- ==================== SCREEN: RESULTS ==================== -->
+        <div class="screen" id="screen-results">
+            <h2 class="clay-title" style="font-size:2.2em;">🎉 Результаты</h2>
+            <div class="star-display" id="starsContainer">
+                <span>⭐</span><span>⭐</span><span>⭐</span>
+            </div>
+            <p style="font-family:var(--font-body);font-size:1.3em;color:#4a3728;text-align:center;" id="resultScore"></p>
+            <p style="font-family:var(--font-body);font-size:1.1em;color:#8b5e3c;text-align:center;max-width:400px;" id="resultMessage"></p>
+            <svg id="resultMascot" width="80" height="80" viewBox="0 0 80 80" class="clay-svg" style="margin:8px 0;"></svg>
+            <div class="nav-btns">
+                <button class="clay-btn pink" onclick="restartGame()" style="font-size:1.15em;">🔄 Пройти ещё раз</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div id="confetti-container"></div>
+
+    <script>
+        // ============ GAME STATE ============
+        const TOTAL_TASKS = 10;
+        let exDone = Array(TOTAL_TASKS).fill(false);
+        let score = 0;
+        let currentTask = 0; // 1-10
+        let selectedChoices = {}; // key: groupName -> value
+
+        // ============ PROGRESS BAR SETUP ============
+        const progressDotsContainer = document.getElementById('progressDots');
+        for (let i = 1; i <= TOTAL_TASKS; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'progress-dot';
+            dot.id = 'dot-' + i;
+            dot.innerHTML = '<span>' + i + '</span>';
+            progressDotsContainer.appendChild(dot);
+        }
+
+        function updateProgress() {
+            for (let i = 1; i <= TOTAL_TASKS; i++) {
+                const dot = document.getElementById('dot-' + i);
+                dot.classList.remove('done', 'active');
+                dot.querySelector('span').textContent = i;
+                if (exDone[i - 1]) {
+                    dot.classList.add('done');
+                } else if (i === currentTask) {
+                    dot.classList.add('active');
+                }
+            }
+            // Show/hide progress bar
+            const pbw = document.getElementById('progressBarWrap');
+            if (currentTask >= 1 && currentTask <= TOTAL_TASKS) {
+                pbw.style.display = 'block';
+            } else {
+                pbw.style.display = 'none';
+            }
+        }
+
+        // ============ SCREEN NAVIGATION ============
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const screen = document.getElementById(id);
+            if (screen) screen.classList.add('active');
+            // Hide progress bar on non-task screens
+            if (id === 'screen-title' || id === 'screen-theory' || id === 'screen-results') {
+                document.getElementById('progressBarWrap').style.display = 'none';
+            }
+            // Re-trigger star animations on results
+            if (id === 'screen-results') {
+                const stars = document.querySelectorAll('#starsContainer span');
+                stars.forEach(s => { s.style.animation = 'none';
+                    s.offsetHeight;
+                    s.style.animation = ''; });
+            }
+        }
+
+        function startTasks() {
+            currentTask = 1;
+            exDone = Array(TOTAL_TASKS).fill(false);
+            score = 0;
+            selectedChoices = {};
+            clearAllTaskInputs();
+            updateProgress();
+            showScreen('screen-task-1');
+        }
+
+        function goToTask(n) {
+            currentTask = n;
+            updateProgress();
+            showScreen('screen-task-' + n);
+            // Hide next button on new task
+            const nextBtn = document.getElementById('next' + n);
+            if (nextBtn) nextBtn.style.display = 'none';
+            const fb = document.getElementById('fb' + n);
+            if (fb) { fb.textContent = '';
+                fb.className = 'feedback'; }
+        }
+
+        function clearAllTaskInputs() {
+            document.querySelectorAll('.math-input').forEach(inp => { inp.value = '';
+                inp.classList.remove('correct', 'wrong'); });
+            document.querySelectorAll('.feedback').forEach(fb => { fb.textContent = '';
+                fb.className = 'feedback'; });
+            document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected', 'correct-choice',
+                'wrong-choice'));
+            document.querySelectorAll('.next-btn').forEach(b => b.style.display = 'none');
+            document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+            selectedChoices = {};
+            // Reset task 10 words
+            buildTask10Words();
+        }
+
+        // ============ CHOICE HANDLING ============
+        function selectChoice(btn, groupName) {
+            const parent = btn.parentElement;
+            if (!parent) return;
+            parent.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedChoices[groupName] = btn.getAttribute('data-val');
+        }
+
+        // ============ TASK 10: BUILD DYNAMIC WORDS ============
+        const t10data = [
+            { word: 'подъём', answer: 'tverdy' },
+            { word: 'ручьи', answer: 'myagky' },
+            { word: 'объявление', answer: 'tverdy' },
+            { word: 'воробьи', answer: 'myagky' },
+            { word: 'съезд', answer: 'tverdy' },
+            { word: 'пьеса', answer: 'myagky' },
+        ];
+
+        function buildTask10Words() {
+            const container = document.getElementById('t10words');
+            if (!container) return;
+            container.innerHTML = '';
+            t10data.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.className = 'row-wrap';
+                row.style.margin = '6px 0';
+                row.dataset.group = 't10g' + idx;
+                const label = document.createElement('span');
+                label.style.fontFamily = 'var(--font-body)';
+                label.style.fontSize = '1.1em';
+                label.style.minWidth = '100px';
+                label.style.textAlign = 'right';
+                label.textContent = item.word;
+                row.appendChild(label);
+                const btnT = document.createElement('button');
+                btnT.className = 'choice-btn';
+                btnT.dataset.val = 'tverdy';
+                btnT.textContent = 'Ъ (твёрдый)';
+                btnT.onclick = function() { selectChoice(btnT, 't10g' + idx); };
+                const btnM = document.createElement('button');
+                btnM.className = 'choice-btn';
+                btnM.dataset.val = 'myagky';
+                btnM.textContent = 'Ь (мягкий)';
+                btnM.onclick = function() { selectChoice(btnM, 't10g' + idx); };
+                row.appendChild(btnT);
+                row.appendChild(btnM);
+                container.appendChild(row);
+            });
+        }
+
+        // ============ CHECK FUNCTIONS ============
+        function markInputCorrect(inp) { inp.classList.add('correct');
+            inp.classList.remove('wrong'); }
+
+        function markInputWrong(inp) { inp.classList.add('wrong');
+            inp.classList.remove('correct'); }
+
+        function showFeedback(id, text, isCorrect) {
+            const fb = document.getElementById(id);
+            fb.textContent = text;
+            fb.className = 'feedback ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+            if (!isCorrect) {
+                fb.classList.add('shake-anim');
+                setTimeout(() => fb.classList.remove('shake-anim'), 500);
+            }
+        }
+
+        function onTaskCorrect(taskNum) {
+            exDone[taskNum - 1] = true;
+            score++;
+            updateProgress();
+            const nextBtn = document.getElementById('next' + taskNum);
+            if (nextBtn) nextBtn.style.display = 'inline-block';
+        }
+
+        // Task 1
+        function checkTask1() {
+            const answers = ['ъ', 'ь', 'ъ', 'ъ', 'ь'];
+            const ids = ['t1a1', 't1a2', 't1a3', 't1a4', 't1a5'];
+            let allCorrect = true;
+            for (let i = 0; i < 5; i++) {
+                const inp = document.getElementById(ids[i]);
+                const val = inp.value.trim().toLowerCase();
+                if (val === answers[i]) {
+                    markInputCorrect(inp);
+                } else {
+                    markInputWrong(inp);
+                    allCorrect = false;
+                }
+            }
+            if (allCorrect) {
+                showFeedback('fb1', '✅ Отлично! Все ответы верны: Ъ, Ь, Ъ, Ъ, Ь', true);
+                onTaskCorrect(1);
+            } else {
+                showFeedback('fb1', '❌ Есть ошибки. Проверь: после приставок на согласный — Ъ, в корне — Ь.', false);
+            }
+        }
+
+        // Task 2
+        function checkTask2() {
+            const correct = { g1: 'soft', g2: 'sep', g3: 'form' };
+            let allCorrect = true;
+            ['g1', 'g2', 'g3'].forEach(g => {
+                const btns = document.querySelectorAll('[data-group="' + g + '"] .choice-btn');
+                const chosen = selectedChoices[g];
+                btns.forEach(b => {
+                    b.classList.remove('correct-choice', 'wrong-choice');
+                    if (b.dataset.val === correct[g]) b.classList.add('correct-choice');
+                    if (b.dataset.val === chosen && chosen !== correct[g]) b.classList.add(
+                        'wrong-choice');
+                });
+                if (chosen !== correct[g]) allCorrect = false;
+            });
+            if (allCorrect) {
+                showFeedback('fb2', '✅ Верно! Коньки — смягчающий, вьюга — разделительный, ночь — показатель формы.', true);
+                onTaskCorrect(2);
+            } else {
+                showFeedback('fb2', '❌ Не все ответы верны. Подумай ещё: где Ь смягчает, где разделяет, а где указывает на форму?',
+                    false);
+            }
+        }
+
+        // Task 3
+        function checkTask3() {
+            const chosen = selectedChoices['t3g'];
+            const btns = document.querySelectorAll('[data-group="t3g"] .choice-btn');
+            btns.forEach(b => b.classList.remove('correct-choice', 'wrong-choice'));
+            if (chosen === 'tverdy') {
+                btns.forEach(b => { if (b.dataset.val === 'tverdy') b.classList.add('correct-choice'); });
+                showFeedback('fb3', '✅ Правильно! После приставки ПОД- на согласный перед Е нужен Ъ: подъезд.', true);
+                onTaskCorrect(3);
+            } else if (chosen === 'myagky') {
+                btns.forEach(b => { if (b.dataset.val === 'myagky') b.classList.add('wrong-choice'); });
+                showFeedback('fb3', '❌ Неверно. После приставки на согласный нужен твёрдый знак (Ъ), а не мягкий.', false);
+            } else {
+                showFeedback('fb3', '⚠️ Сначала выбери один из вариантов!', false);
+            }
+        }
+
+        // Task 4
+        function checkTask4() {
+            const chosen = selectedChoices['t4g'];
+            const btns = document.querySelectorAll('[data-group="t4g"] .choice-btn');
+            btns.forEach(b => b.classList.remove('correct-choice', 'wrong-choice'));
+            if (chosen === 'A') {
+                btns.forEach(b => { if (b.dataset.val === 'A') b.classList.add('correct-choice'); });
+                showFeedback('fb4', '✅ Верно! адЪютант — после иноязычной приставки ад- перед Ю пишется Ъ.', true);
+                onTaskCorrect(4);
+            } else if (chosen === 'B' || chosen === 'C') {
+                btns.forEach(b => { if (b.dataset.val === chosen) b.classList.add('wrong-choice'); });
+                btns.forEach(b => { if (b.dataset.val === 'A') b.classList.add('correct-choice'); });
+                showFeedback('fb4', '❌ Неверно. Правильный ответ: адЪютант (после приставки на согласный — Ъ).', false);
+            } else {
+                showFeedback('fb4', '⚠️ Сначала выбери вариант ответа!', false);
+            }
+        }
+
+        // Task 5
+        function checkTask5() {
+            const answers = ['', 'ъ', 'ь'];
+            const ids = ['t5a1', 't5a2', 't5a3'];
+            let allCorrect = true;
+            for (let i = 0; i < 3; i++) {
+                const inp = document.getElementById(ids[i]);
+                const val = inp.value.trim().toLowerCase();
+                if (val === answers[i]) {
+                    markInputCorrect(inp);
+                } else {
+                    markInputWrong(inp);
+                    allCorrect = false;
+                }
+            }
+            if (allCorrect) {
+                showFeedback('fb5', '✅ Отлично! облака (без знака), съёжились (Ъ), вьюном (Ь).', true);
+                onTaskCorrect(5);
+            } else {
+                showFeedback('fb5', '❌ Проверь: облака — нет знака; сЪёжились — после приставки С-; вЬюном — в корне.', false);
+            }
+        }
+
+        // Task 6
+        function checkTask6() {
+            const chosen = selectedChoices['t6g'];
+            const btns = document.querySelectorAll('[data-group="t6g"] .choice-btn');
+            btns.forEach(b => b.classList.remove('correct-choice', 'wrong-choice'));
+            if (chosen === 'A') {
+                btns.forEach(b => { if (b.dataset.val === 'A') b.classList.add('correct-choice'); });
+                showFeedback('fb6', '✅ Верно! Разделительный Ъ пишется после приставок на согласный перед Е, Ё, Ю, Я.', true);
+                onTaskCorrect(6);
+            } else if (chosen === 'B' || chosen === 'C') {
+                btns.forEach(b => { if (b.dataset.val === chosen) b.classList.add('wrong-choice'); });
+                btns.forEach(b => { if (b.dataset.val === 'A') b.classList.add('correct-choice'); });
+                showFeedback('fb6', '❌ Неверно. Правило: Ъ — после приставок на согласный перед Е,Ё,Ю,Я (вариант А).', false);
+            } else {
+                showFeedback('fb6', '⚠️ Выбери один из вариантов!', false);
+            }
+        }
+
+        // Task 7
+        function checkTask7() {
+            const container = document.getElementById('t7checkboxes');
+            const checkboxes = container.querySelectorAll('input[type=checkbox]');
+            const correctSet = new Set(['vuga', 'semya', 'ruzhye']);
+            const selectedSet = new Set();
+            checkboxes.forEach(cb => { if (cb.checked) selectedSet.add(cb.value); });
+            let allCorrect = true;
+            checkboxes.forEach(cb => {
+                const label = cb.parentElement;
+                label.classList.remove('correct-choice', 'wrong-choice');
+                if (correctSet.has(cb.value) && cb.checked) label.classList.add('correct-choice');
+                if (!correctSet.has(cb.value) && cb.checked) { label.classList.add('wrong-choice');
+                    allCorrect = false; }
+                if (correctSet.has(cb.value) && !cb.checked) allCorrect = false;
+            });
+            if (allCorrect && selectedSet.size === correctSet.size) {
+                showFeedback('fb7', '✅ Верно! вЬюга, семЬя, ружЬё — разделительный Ь в корне.', true);
+                onTaskCorrect(7);
+            } else {
+                showFeedback('fb7', '❌ Не все слова отмечены верно. Нужны: вьюга, семья, ружьё (Ь в корне). ПодЪезд и сЪёмка — с Ъ.',
+                    false);
+            }
+        }
+
+        // Task 8
+        function checkTask8() {
+            const inp = document.getElementById('t8a1');
+            const val = inp.value.trim().toLowerCase();
+            inp.classList.remove('correct', 'wrong');
+            if (val === 'подъехать') {
+                markInputCorrect(inp);
+                showFeedback('fb8', '✅ Верно! подЪехать — после приставки ПОД- перед Е пишется Ъ.', true);
+                onTaskCorrect(8);
+            } else {
+                markInputWrong(inp);
+                showFeedback('fb8', '❌ Неверно. Подумай: приставка ПОД- + корень ЕХАТЬ + Ъ = подЪехать.', false);
+            }
+        }
+
+        // Task 9
+        function checkTask9() {
+            const answers = ['вьюга', 'подъехали', 'семья'];
+            const ids = ['t9a1', 't9a2', 't9a3'];
+            let allCorrect = true;
+            for (let i = 0; i < 3; i++) {
+                const inp = document.getElementById(ids[i]);
+                const val = inp.value.trim().toLowerCase();
+                inp.classList.remove('correct', 'wrong');
+                if (val === answers[i]) {
+                    markInputCorrect(inp);
+                } else {
+                    markInputWrong(inp);
+                    allCorrect = false;
+                }
+            }
+            if (allCorrect) {
+                showFeedback('fb9', '✅ Отлично! Ошибки: Вюга→ВЬюга, подехали→подЪехали, Семя→СемЬя.', true);
+                onTaskCorrect(9);
+            } else {
+                showFeedback('fb9', '❌ Проверь: ВЬюга (разделит. Ь), подЪехали (Ъ после приставки), семЬя (разделит. Ь).', false);
+            }
+        }
+
+        // Task 10
+        function checkTask10() {
+            let allCorrect = true;
+            t10data.forEach((item, idx) => {
+                const groupName = 't10g' + idx;
+                const chosen = selectedChoices[groupName];
+                const btns = document.querySelectorAll('[data-group="' + groupName + '"] .choice-btn');
+                btns.forEach(b => b.classList.remove('correct-choice', 'wrong-choice'));
+                if (chosen === item.answer) {
+                    btns.forEach(b => { if (b.dataset.val === item.answer) b.classList.add('correct-choice'); });
+                } else {
+                    btns.forEach(b => { if (b.dataset.val === chosen) b.classList.add('wrong-choice'); });
+                    btns.forEach(b => { if (b.dataset.val === item.answer) b.classList.add('correct-choice'); });
+                    allCorrect = false;
+                }
+            });
+            if (allCorrect) {
+                showFeedback('fb10', '✅ Великолепно! Все слова распределены верно.', true);
+                onTaskCorrect(10);
+            } else {
+                showFeedback('fb10', '❌ Есть ошибки. Проверь: где приставка — там Ъ, где корень — там Ь.', false);
+            }
+        }
+
+        // ============ RESULTS ============
+        function showResults() {
+            currentTask = 0;
+            updateProgress();
+            showScreen('screen-results');
+            document.getElementById('resultScore').textContent = 'Правильных ответов: ' + score + ' из ' + TOTAL_TASKS;
+            const starsContainer = document.getElementById('starsContainer');
+            const mascotSvg = document.getElementById('resultMascot');
+            let starCount = 0;
+            let message = '';
+            if (score >= 10) {
+                starCount = 3;
+                message = '🏆 Потрясающе! Ты настоящий знаток Ь и Ъ! Все задания решены безупречно!';
+                launchConfetti();
+            } else if (score >= 7) {
+                starCount = 2;
+                message = '👍 Отлично! Ты хорошо знаешь правила, но есть куда расти. Повтори теорию и попробуй снова!';
+            } else if (score >= 4) {
+                starCount = 1;
+                message = '📖 Неплохо! Но стоит ещё раз повторить правила употребления Ь и Ъ. Не сдавайся!';
+            } else {
+                starCount = 0;
+                message = '🌱 Ты только начинаешь! Вернись к теории, изучи правила и попробуй ещё раз. Всё получится!';
+            }
+            document.getElementById('resultMessage').textContent = message;
+            // Update stars
+            starsContainer.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                const span = document.createElement('span');
+                span.textContent = i < starCount ? '⭐' : '☆';
+                span.style.opacity = i < starCount ? '1' : '0.4';
+                span.style.animation = i < starCount ? 'starSpin 0.7s ease forwards' : 'none';
+                span.style.animationDelay = (i * 0.25) + 's';
+                starsContainer.appendChild(span);
+            }
+            // Mascot SVG
+            if (score >= 10) {
+                mascotSvg.innerHTML =
+                    '<circle cx="40" cy="35" r="22" fill="#ffb347" stroke="#d4892a" stroke-width="3"/><circle cx="30" cy="30" r="4" fill="#fff" opacity="0.8"/><circle cx="48" cy="30" r="4" fill="#fff" opacity="0.8"/><circle cx="33" cy="28" r="2" fill="#333"/><circle cx="51" cy="28" r="2" fill="#333"/><path d="M28 44 Q40 54 52 44" fill="none" stroke="#5c3d2e" stroke-width="3" stroke-linecap="round"/><text x="40" y="72" text-anchor="middle" font-size="28">🎉</text>';
+            } else if (score >= 7) {
+                mascotSvg.innerHTML =
+                    '<circle cx="40" cy="35" r="22" fill="#7ec8e3" stroke="#4a9ab5" stroke-width="3"/><circle cx="30" cy="30" r="4" fill="#fff" opacity="0.8"/><circle cx="48" cy="30" r="4" fill="#fff" opacity="0.8"/><circle cx="33" cy="28" r="2" fill="#333"/><circle cx="51" cy="28" r="2" fill="#333"/><path d="M30 46 Q40 52 50 46" fill="none" stroke="#5c3d2e" stroke-width="3" stroke-linecap="round"/><text x="40" y="72" text-anchor="middle" font-size="24">👍</text>';
+            } else {
+                mascotSvg.innerHTML =
+                    '<circle cx="40" cy="35" r="22" fill="#ff9aa2" stroke="#c76d75" stroke-width="3"/><circle cx="30" cy="32" r="4" fill="#fff" opacity="0.7"/><circle cx="48" cy="32" r="4" fill="#fff" opacity="0.7"/><circle cx="34" cy="30" r="2" fill="#333"/><circle cx="52" cy="30" r="2" fill="#333"/><path d="M28 48 Q40 42 52 48" fill="none" stroke="#5c3d2e" stroke-width="3" stroke-linecap="round"/><text x="40" y="72" text-anchor="middle" font-size="22">📖</text>';
+            }
+        }
+
+        function restartGame() {
+            exDone = Array(TOTAL_TASKS).fill(false);
+            score = 0;
+            currentTask = 0;
+            selectedChoices = {};
+            clearAllTaskInputs();
+            updateProgress();
+            document.getElementById('confetti-container').innerHTML = '';
+            showScreen('screen-title');
+        }
+
+        // ============ CONFETTI ============
+        function launchConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#ffb347',
+            '#6bcb77'];
+            for (let i = 0; i < 100; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 2.5 + 's';
+                piece.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+                piece.style.width = (8 + Math.random() * 16) + 'px';
+                piece.style.height = (6 + Math.random() * 14) + 'px';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+                container.appendChild(piece);
+                setTimeout(() => piece.remove(), 4000);
+            }
+        }
+
+        // ============ INIT ============
+        function init() {
+            buildTask10Words();
+            updateProgress();
+            document.getElementById('progressBarWrap').style.display = 'none';
+            showScreen('screen-title');
+        }
+        init();
+        console.log('🎨 Пластилиновый мир Ь и Ъ готов! Удачи в повторении правил!');
+    </script>
+</body>
+</html>
